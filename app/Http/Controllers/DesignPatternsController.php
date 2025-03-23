@@ -39,35 +39,7 @@ class DesignPatternsController extends Controller
             'patternObj' => $this->designPatternsService->designPattern,
             'targetClassInstance' => $this->designPatternsService->designPattern->getTargetClassInstance()
         ]);
-
-        // if (in_array($pattern, array_keys($this->designPatternsService->getDesignPatterns()))) {
-        //     $method = "handleDesignPattern" . ucfirst($pattern);
-        //     return $this->$method();
-        // }
-
-        // throw new InvalidArgumentException("Unexcepted design pattern!");
     }
-
-    // protected function handleDesignPatternSingleton()
-    // {
-    //     $instance = Singleton::getInstance();
-    //     $instance->setTargetClass("Vehcile");
-    //     return view('main', [
-    //         'patterns' => $this->designPatternsService->getDesignPatterns(),
-    //         'patternObj' => $instance
-    //     ]);
-    // }
-
-    // protected function handleDesignPatternFactory()
-    // {
-    //     $instance = VehicleFactory::create('Toyota', 'Prius');
-    //     return view('main', [
-    //         'patterns' => $this->designPatternsService->getDesignPatterns(),
-    //         'patternObj' => $instance,
-    //         'form' => 'vehicle',
-    //         'makeModels' => $this->targetClassService->getMakeModels()
-    //     ]);
-    // }
 
     public function create(Request $req)
     {
@@ -75,17 +47,45 @@ class DesignPatternsController extends Controller
         $this->designPatternsService->setDesignPattern(ucfirst($bodyContent["pattern"]));
         $this->designPatternsService->designPattern->setTargetClass("Vehicle");
 
-        $firstCall = $this->designPatternsService->designPattern->getTargetClassInstance()
-        ->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"])
-        ->describe();
+        $outputFormatter = ucfirst($bodyContent["category"]) . "OutputFormatter";
 
-        $secondCall = $this->designPatternsService->designPattern->getTargetClassInstance()
-        ->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"])
-        ->describe();
+        $instance1 = $this->designPatternsService->designPattern->getTargetClassInstance();
+        $instance2 = $this->designPatternsService->designPattern->getTargetClassInstance();
+
+        $instance1->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"]);
+        $instance1->setOutputFormatter(new ($this->getOutputFormatterFullName($outputFormatter))());
+        $instance2->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"]);
+        $instance2->setOutputFormatter(new ($this->getOutputFormatterFullName($outputFormatter))());
 
         return response()->json([
             'status' => 'success',
-            'message' => $firstCall . " ===== " . $secondCall
+            'instance1_description' => nl2br(htmlspecialchars($instance1->describe(), ENT_QUOTES)),
+            'instance2_description' => nl2br(htmlspecialchars($instance2->describe(), ENT_QUOTES)),
+            'outputFormatter' => nl2br(htmlspecialchars($instance1->outputFormatter->output(), ENT_QUOTES))
         ]);
+    }
+
+    public function behave(Request $req)
+    {
+        $bodyContent = $req->toArray();
+        $this->designPatternsService->setDesignPattern(ucfirst($bodyContent["pattern"]));
+        $this->designPatternsService->designPattern->setTargetClass("Vehicle");
+
+        $instance = $this->designPatternsService->designPattern->getTargetClassInstance()
+        ->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"]);
+
+        $outputFormatter = ucfirst($bodyContent["category"]) . "OutputFormatter";
+        $instance->setOutputFormatter(new ($this->getOutputFormatterFullName($outputFormatter))());
+
+        return response()->json([
+            'status' => 'success',
+            'instance1_description' => nl2br(htmlspecialchars($instance->describe(), ENT_QUOTES)),
+            'outputFormatter' => nl2br(htmlspecialchars($instance->outputFormatter->output(), ENT_QUOTES))
+        ]);
+    }
+
+    private function getOutputFormatterFullName($formatterName)
+    {
+        return "App\\Models\\Vehicles\\{$formatterName}";
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services\TargetClass;
 
-use App\Models\Vehicle;
+use App\Models\Vehicles\Vehicle;
 
 class TargetClassService
 {
@@ -31,6 +31,6 @@ class TargetClassService
 
     public static function getFullClassName(string $className)
     {
-        return "App\\Models\\{$className}";
+        return "App\\Models\\Vehicles\\{$className}";
     }
 }

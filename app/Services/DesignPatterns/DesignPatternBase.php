@@ -24,6 +24,13 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
     protected $description;
 
     /**
+     * Describes what category this pattern belongs to
+     *
+     * @var string
+     */
+    protected $category;
+
+    /**
      * Target class name this design pattern class works with
      * 
      * @var string
@@ -48,6 +55,16 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
     public function getLabel(): ?string
     {
         return ucfirst($this->name);
+    }
+
+    /**
+     * Returns the category the design pattern belongs to.
+     *
+     * @return string|null
+     */
+    public function getCategory(): ?string
+    {
+        return $this->category;
     }
 
     /**

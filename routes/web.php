@@ -9,7 +9,9 @@ Route::get('/', [DesignPatternsController::class, 'main']);
 
 Route::get('/design_pattern/{pattern}', [DesignPatternsController::class, 'designPattern']);
 
-Route::post('/submit', [DesignPatternsController::class, 'create']);
+Route::post('/create', [DesignPatternsController::class, 'create']);
+
+Route::post('/behave', [DesignPatternsController::class, 'behave']);
 
 // Route::post('/submit', function(Request $req, Response $res) {
 //     $reqBody = $req->toArray();

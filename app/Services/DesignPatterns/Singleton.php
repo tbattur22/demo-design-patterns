@@ -2,7 +2,7 @@
 
 namespace App\Services\DesignPatterns;
 
-use App\Models\Vehicle;
+use App\Models\Vehicles\Vehicle;
 use App\Services\DesignPatterns\Interfaces\Describable;
 use App\Services\DesignPatterns\Interfaces\DesignPatternContract;
 use App\Services\DesignPatterns\Interfaces\TargetClassContract;
@@ -34,6 +34,7 @@ class Singleton extends DesignPatternBase
     protected function __construct()
     {
         $this->name = "singleton";
+        $this->category = "creational";
         $this->description = "Describe Singleton pattern";
     }
 

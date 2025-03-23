@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * The class implements the Factory pattern
  */
-class Factory extends DesignPatternBase
+class Strategy extends DesignPatternBase
 {
     /**
      * Single instance of the Vehicle class
@@ -22,10 +22,9 @@ class Factory extends DesignPatternBase
 
     public function __construct()
     {
-        $this->name = "factory";
-        $this->category = "creational";
-        $this->description = "Describe Factory pattern";
-
+        $this->name = "strategy";
+        $this->category = "behavioral";
+        $this->description = "Describe Strategy pattern";
     }
 
     /**

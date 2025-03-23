@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Vehicles;
 
+use App\Services\DesignPatterns\Interfaces\OutputContract;
 use App\Services\DesignPatterns\Interfaces\TargetClassContract;
 
 class Vehicle implements TargetClassContract
 {
     public static $makeAndModels;
+    public $outputFormatter;
     protected $id;
     private $make;
     private $model;
@@ -31,7 +33,7 @@ class Vehicle implements TargetClassContract
     public function describe():string
     {
         $description = <<<EOD
-        This is Vehicle class instance.
+        vehicle class instance.
         Id: {$this->id}
         Make: {$this->make}
         Model: {$this->model}.
@@ -49,5 +51,10 @@ class Vehicle implements TargetClassContract
     {
         $this->model = $model;
         return $this;
+    }
+    public function setOutputFormatter(OutputContract $formatter)
+    {
+        $this->outputFormatter = $formatter;
+        $this->outputFormatter->setTargetClassInstance($this);
     }
 }

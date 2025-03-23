@@ -16,7 +16,8 @@ class DesignPatternService
     {
         $this->designPatterns = [
             'singleton' => Singleton::getInstance(null, null),
-            'factory' => new Factory()
+            'factory' => new Factory(),
+            'strategy' => new Strategy()
         ];        
     }
 
