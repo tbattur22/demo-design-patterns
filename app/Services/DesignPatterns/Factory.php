@@ -24,7 +24,7 @@ class Factory extends DesignPatternBase
     {
         $this->name = "factory";
         $this->category = "creational";
-        $this->description = "Describe Factory pattern";
+        $this->description = "The Factory Method Design Pattern is a creational design pattern used in software development. It provides an interface for creating objects in a superclass while allowing subclasses to specify the types of objects they create.";
 
     }
 

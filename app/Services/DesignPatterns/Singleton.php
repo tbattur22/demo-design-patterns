@@ -35,7 +35,7 @@ class Singleton extends DesignPatternBase
     {
         $this->name = "singleton";
         $this->category = "creational";
-        $this->description = "Describe Singleton pattern";
+        $this->description = "The Singleton Method Design Pattern ensures a class has only one instance and provides a global access point to it.";
     }
 
     /**

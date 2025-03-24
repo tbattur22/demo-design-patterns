@@ -24,7 +24,7 @@ class Strategy extends DesignPatternBase
     {
         $this->name = "strategy";
         $this->category = "behavioral";
-        $this->description = "Describe Strategy pattern";
+        $this->description = "The Strategy Design Pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable, allowing clients to switch algorithms dynamically without altering the code structure.";
     }
 
     /**

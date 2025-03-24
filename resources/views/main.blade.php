@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('nav-section')
-    <div class='fixed hidden sm:flex bg-blue-400'>
+    <div class='fixed hidden sm:flex rounded-2xl bg-blue-200'>
         <nav class='w-full px-5 lg:px-8 xl:px-[8%] pt-2 pb-0.1 flex justify-center items-center'>
             <ul class="hidden sm:flex justify-center items-center gap-6 lg:gap-8 rounded-full px-12 py-3 ">
                 @include('nav-menu')
@@ -12,7 +12,7 @@
         <nav class='w-full px-5 lg:px-8 xl:px-[8%] pt-2 pb-0.1 flex justify-center items-center'>
             {{-- mobile menu --}}
             <ul class="flex sm:hidden flex-col gap-4 px-10 py-20 fixed -right-64
-            top-0 bottom-0 w-64 z-50 h-screen bg-blue-400">
+            top-0 bottom-0 w-64 z-50 h-screen bg-blue-200">
                 <div class='closeSideMenu absolute right-6 top-6'>
                     <Image src="{{ asset('images/close-black.png') }}" alt='' class='w-5 cursor-pointer' />
                 </div>
@@ -50,13 +50,12 @@
 @section('design-pattern-section')
     <div class='design_pattern_section mt-16'>
         @if (isset($home))
-            <div class="home">
-                <h1>Home section goes here</h1>
+            <div class="home max-w-3xl m-4 p-4">
+                @include('Home')
             </div>            
         @elseif ($patternObj)
-            <div class="my-4 mx-auto text-center">
-                <h1>Design Pattern Section</h1>
-                <p>{!! nl2br(e($patternObj->describe())) !!}</p>
+            <div class="my-4 font-bold mx-auto text-center">
+                <p class='m-4 p-4 md:max-w-3xl'>{!! nl2br(e($patternObj->describe())) !!}</p>
             </div>
             @if (isset($targetClassInstance))
                 @include(get_class($targetClassInstance))

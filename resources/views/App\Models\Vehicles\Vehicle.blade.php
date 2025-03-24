@@ -25,6 +25,7 @@ $makeModels = get_class($targetClassInstance)::getMakeAndModels();
     <div class="hidden vehicle_submission mt-4 p-2 max-w-sm mx-auto">
         <div class="description flex flex-wrap">
             <div class="instance1">
+                <h5 class="mb-2  font-bold tracking-tight text-gray-900 dark:text-white"></h5>
                 <p class="instance1 text-center text-gray-500 dark:text-gray-400">
                 </p>
                 <blockquote class="instance1 p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
@@ -40,7 +41,7 @@ $makeModels = get_class($targetClassInstance)::getMakeAndModels();
             </div>                
         </div>
         <div class="outputFormatter max-w-2xl">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"></h5>
+            <h5 class="mb-2  font-bold tracking-tight text-gray-900 dark:text-white">Strategy Design Pattern is used to display the following formatter.</h5>
             <p class="font-normal text-gray-700 dark:text-gray-400"></p>
         </div>
     </div>
@@ -93,6 +94,7 @@ $makeModels = get_class($targetClassInstance)::getMakeAndModels();
                 success: function(response) {
                     console.log(response);
                     const submissionDiv = document.querySelector("div.vehicle_submission");
+                    const compareNotice = submissionDiv.querySelector("div.description h5");
                     const p1 = submissionDiv.querySelector("div.description p.instance1");
                     const p2 = submissionDiv.querySelector("div.description p.instance2");
                     const block1 = submissionDiv.querySelector("div.description blockquote.instance1 p");
@@ -105,6 +107,11 @@ $makeModels = get_class($targetClassInstance)::getMakeAndModels();
                     if (response?.instance2_description) {
                         p2.innerHTML = "Vehicle instance 2";
                         block2.innerHTML = response.instance2_description;
+                        if (curPattern === 'singleton') {
+                            compareNotice.innerHTML = "For the Singleton Pattern notice that the instance ids are the same for the two instances that were created.";
+                        } else if (curPattern === 'factory') {
+                            compareNotice.innerHTML = "For the Factory Pattern notice that the instance ids are dirrent for the two instances that were created.";
+                        }
                     } else {
                         instance2Div.classList.add('hidden');
                     }
