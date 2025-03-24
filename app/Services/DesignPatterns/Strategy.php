@@ -28,15 +28,20 @@ class Strategy extends DesignPatternBase
     }
 
     /**
-     * print method implementation required by Design Pattern Interface
+     * Method returns the description
      *
-     * @return void
+     * @return string
      */
     public function describe(): string
     {
         return $this->description;   
     }
 
+    /**
+     * Instantiates Target Class instance and returns it
+     *
+     * @return TargetClassContract
+     */
     public function getTargetClassInstance(): TargetClassContract
     {
         if (empty($this->targetClass)) {

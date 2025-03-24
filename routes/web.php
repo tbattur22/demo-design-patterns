@@ -12,12 +12,3 @@ Route::get('/design_pattern/{pattern}', [DesignPatternsController::class, 'desig
 Route::post('/create', [DesignPatternsController::class, 'create']);
 
 Route::post('/behave', [DesignPatternsController::class, 'behave']);
-
-// Route::post('/submit', function(Request $req, Response $res) {
-//     $reqBody = $req->toArray();
-//     dd($reqBody);
-//     return $res->json([
-//         'status' => 'success',
-//         'message' => $req->all
-//     ]);
-// });

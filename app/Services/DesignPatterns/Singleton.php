@@ -31,6 +31,10 @@ class Singleton extends DesignPatternBase
      */
     public static $targetClassInstance;
 
+    /**
+     * Since it is Singleton design pattern we make the constructor protected
+     * to prevent from directly instantiating it
+     */
     protected function __construct()
     {
         $this->name = "singleton";
@@ -39,10 +43,10 @@ class Singleton extends DesignPatternBase
     }
 
     /**
-     * Method returns the existing vehicle instance or creates one and
+     * Method returns the existing instance of Singleton class or creates one and
      * returns it if it does not exist.
      *
-     * @return Vehicle
+     * @return Singleton
      */
     public static function getInstance():DesignPatternContract
     {
@@ -52,6 +56,12 @@ class Singleton extends DesignPatternBase
         return self::$instance;
     }
 
+    /**
+     * Returns existing instance of the Target Class or instantiates new instance
+     * in case it does not exist
+     *
+     * @return TargetClassContract
+     */
     public function getTargetClassInstance(): TargetClassContract
     {
         if (empty($this->targetClass)) {

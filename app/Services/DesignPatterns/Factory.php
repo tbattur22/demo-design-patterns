@@ -38,6 +38,11 @@ class Factory extends DesignPatternBase
         return $this->description;   
     }
 
+    /**
+     * Method instantiates and returns Target Class instance
+     *
+     * @return TargetClassContract
+     */
     public function getTargetClassInstance(): TargetClassContract
     {
         if (empty($this->targetClass)) {

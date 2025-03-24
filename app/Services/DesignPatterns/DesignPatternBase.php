@@ -77,17 +77,30 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
         return $this->description;   
     }
 
+    /**
+     * Setter for Target Class name
+     *
+     * @param string $className
+     * @return void
+     */
     public function setTargetClass(string $className): void
     {
-        // $targetClass = new $className();
-        // if (!$targetClass instanceof DesignPatternContract) {
-            
-        // }
         $this->targetClass = $className;
     }
 
+    /**
+     * Abstract method to return Target Class instance
+     *
+     * @return TargetClassContract
+     */
     abstract public function getTargetClassInstance():TargetClassContract;
 
+    /**
+     * Helper method to return fully qualified name of the Design Pattern class
+     *
+     * @param string $className
+     * @return string fully qualified class name
+     */
     protected function getFullClassName(string $className)
     {
         return "App\\Services\\DesignPatterns\\{$className}";
