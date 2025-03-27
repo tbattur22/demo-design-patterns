@@ -69,7 +69,7 @@ class Singleton extends DesignPatternBase
         }
 
         if (is_null(self::$targetClassInstance)) {
-            self::$targetClassInstance = new (TargetClassService::getFullClassName($this->targetClass));
+            self::$targetClassInstance = new ($this->targetClass);
         }
         return self::$targetClassInstance;
     }

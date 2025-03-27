@@ -2,26 +2,21 @@
 
 namespace App\Services\TargetClass;
 
+use App\Services\DesignPatterns\Interfaces\TargetClassServiceContract;
 use App\Models\Vehicles\Vehicle;
+use App\Services\DesignPatterns\Interfaces\TargetClassContract;
 
-class TargetClassService
+class TargetClassService implements TargetClassServiceContract
 {
     /**
-     * stores vehicle Make and Models
+     * stores fully qualified target class name
      *
-     * @var array
+     * @var TargetClassContract
      */
-    protected $makeModels = [];
+    protected $targetClass;
 
     public function __construct()
     {
-        // in real application the data would come from database
-        $this->makeModels = [
-            'Audi' => ['A5', 'A5 Sportback', 'A6', 'A6 allroad'] ,
-            'Nissan' => ['Altima', 'ARIYA', 'Aemada'],
-            'Ford' => ['Bronco', 'Bronco Sport'],
-            'Toyota' => ['Camry', 'Corolla', 'Prius']
-        ];
     }
 
     /**
@@ -29,9 +24,9 @@ class TargetClassService
      *
      * @return array
      */
-    public function getMakeModels():array
+    public function getTargetClass(): TargetClassContract
     {
-        return $this->makeModels;
+        return $this->targetClass;
     }
 
     /**
@@ -41,19 +36,13 @@ class TargetClassService
      * @param string $model
      * @return void
      */
-    public function create(string $make, string $model)
+    public function createTargetClassInstance(): TargetClassContract
     {
-        return new Vehicle($make, $model);
+        return new $this->targetClass();
     }
 
-    /**
-     * Helper method to return fully qualified name of the class
-     *
-     * @param string $className
-     * @return string
-     */
-    public static function getFullClassName(string $className)
+    public function setTargetClass(TargetClassContract $class)
     {
-        return "App\\Models\\Vehicles\\{$className}";
+        $this->targetClass = $class;
     }
 }

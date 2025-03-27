@@ -48,7 +48,7 @@ class Strategy extends DesignPatternBase
             throw new DomainException("Target class has not been set.");
         }
 
-        $this->targetClassInstance = new (TargetClassService::getFullClassName($this->targetClass));
+        $this->targetClassInstance = new $this->targetClass;
 
         return $this->targetClassInstance;
     }

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.main')
 
 @section('nav-section')
     <div class='fixed hidden sm:flex rounded-2xl bg-blue-200'>

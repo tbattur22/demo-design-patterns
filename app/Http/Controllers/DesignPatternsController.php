@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\DesignPatterns\DesignPatternService;
 use App\Services\TargetClass\TargetClassService;
+use App\Models\Vehicles\Vehicle;
+use App\Models\Vehicles\CreationalOutputFormatter;
+use App\Models\Vehicles\BehavioralOutputFormatter;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 /**
  * Design Patterns main controller that manipulates the target class set
@@ -26,6 +30,15 @@ class DesignPatternsController extends Controller
      */
     protected $targetClassService;
 
+    /**
+     * Maps Output formatter class name with fully qualified class name
+     *
+     * @var array
+     */
+    protected $outputFormatters = [
+        'CreationalOutputFormatter' => CreationalOutputFormatter::class,
+        'BehavioralOutputFormatter' => BehavioralOutputFormatter::class
+    ];
     /**
      * Constructor injects the two service instances
      *
@@ -61,7 +74,7 @@ class DesignPatternsController extends Controller
     public function designPattern(string $pattern)
     {
         $this->designPatternsService->setDesignPattern(ucfirst($pattern));
-        $this->designPatternsService->designPattern->setTargetClass("Vehicle");
+        $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
 
         return view('main', [
             'patterns' => $this->designPatternsService->getDesignPatterns(),
@@ -82,7 +95,7 @@ class DesignPatternsController extends Controller
         $bodyContent = $req->toArray();
         // set selected design pattern and vehicle as target class
         $this->designPatternsService->setDesignPattern(ucfirst($bodyContent["pattern"]));
-        $this->designPatternsService->designPattern->setTargetClass("Vehicle");
+        $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
 
         // based on design pattern category we set a specific Output Formatter to be used by target class
         $outputFormatter = ucfirst($bodyContent["category"]) . "OutputFormatter";
@@ -117,7 +130,7 @@ class DesignPatternsController extends Controller
         $bodyContent = $req->toArray();
         // set selected design pattern and vehicle as target class
         $this->designPatternsService->setDesignPattern(ucfirst($bodyContent["pattern"]));
-        $this->designPatternsService->designPattern->setTargetClass("Vehicle");
+        $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
 
         // set user selected Vehicle make and model and set output formatter according to selected deisgn pattern category
         $instance = $this->designPatternsService->designPattern->getTargetClassInstance()
@@ -142,6 +155,10 @@ class DesignPatternsController extends Controller
      */
     private function getOutputFormatterFullName(string $formatterName)
     {
-        return "App\\Models\\Vehicles\\{$formatterName}";
+        if (!empty($this->outputFormatters[$formatterName])) {
+            return $this->outputFormatters[$formatterName];
+        }
+
+        throw new InvalidArgumentException("Unsupported output formatter {$formatterName}");
     }
 }

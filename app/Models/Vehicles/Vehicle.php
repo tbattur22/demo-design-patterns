@@ -4,11 +4,12 @@ namespace App\Models\Vehicles;
 
 use App\Services\DesignPatterns\Interfaces\OutputContract;
 use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Services\TargetClass\TargetClassBase;
 
 /**
  * Vehicle class representing Target Class
  */
-class Vehicle implements TargetClassContract
+class Vehicle extends TargetClassBase
 {
     /**
      * stores Make and Models of all available vehicle
@@ -63,7 +64,7 @@ class Vehicle implements TargetClassContract
      *
      * @return array
      */
-    public static function getMakeAndModels()
+    public static function getData():array
     {
         return self::$makeAndModels;
     }

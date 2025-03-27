@@ -1,7 +1,7 @@
 
-<?php
-$makeModels = get_class($targetClassInstance)::getMakeAndModels();
-?>
+@php
+$makeModels = get_class($targetClassInstance)::getData();
+@endphp
 <div class="vehicle_section">
     <form action="{{ url('/') }}" enctype="multipart/form-data" id="vehicle" name="vehicle" class="max-w-sm mx-auto">
         @csrf
