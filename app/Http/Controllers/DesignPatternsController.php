@@ -54,11 +54,11 @@ class DesignPatternsController extends Controller
     /**
      * Method returns all available design patterns when Home menu is clicked
      *
-     * @return view main
+     * @return view index
      */
-    public function main()
+    public function index()
     {
-        return view('main', [
+        return view('index', [
             'patterns' => $this->designPatternsService->getDesignPatterns(),
             'home' => true
         ]);
@@ -69,14 +69,14 @@ class DesignPatternsController extends Controller
      * in addition to all available design patterns
      *
      * @param string $pattern a specific design pattern a user selected
-     * @return view main
+     * @return view index
      */
     public function designPattern(string $pattern)
     {
         $this->designPatternsService->setDesignPattern(ucfirst($pattern));
         $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
 
-        return view('main', [
+        return view('index', [
             'patterns' => $this->designPatternsService->getDesignPatterns(),
             'patternObj' => $this->designPatternsService->designPattern,
             'targetClassInstance' => $this->designPatternsService->designPattern->getTargetClassInstance()
