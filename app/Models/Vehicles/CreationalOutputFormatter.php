@@ -2,8 +2,8 @@
 
 namespace App\Models\Vehicles;
 
-use App\Services\DesignPatterns\Interfaces\OutputContract;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\OutputContract;
+use App\Contracts\TargetClassContract;
 
 class CreationalOutputFormatter implements OutputContract
 {
@@ -18,7 +18,7 @@ class CreationalOutputFormatter implements OutputContract
      * Setter for Target Class Instance
      *
      * @param TargetClassContract $instance
-     * @return void
+     * @return
      */
     public function setTargetClassInstance(TargetClassContract $instance): void
     {

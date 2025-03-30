@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\DesignPatterns\Interfaces;
+namespace App\Contracts;
 
 interface TargetClassServiceContract {
     public function getTargetClass(): TargetClassContract;

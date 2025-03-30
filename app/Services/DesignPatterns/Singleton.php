@@ -3,10 +3,8 @@
 namespace App\Services\DesignPatterns;
 
 use App\Models\Vehicles\Vehicle;
-use App\Services\DesignPatterns\Interfaces\Describable;
-use App\Services\DesignPatterns\Interfaces\DesignPatternContract;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
-use App\Services\TargetClass\TargetClassService;
+use App\Contracts\DesignPatternContract;
+use App\Contracts\TargetClassContract;
 use DomainException;
 use Illuminate\Support\Facades\Log;
 

@@ -2,9 +2,7 @@
 
 namespace App\Services\DesignPatterns;
 
-use App\Models\Vehicles\Vehicle;
-use App\Services\DesignPatterns\Interfaces\Describable;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\TargetClassContract;
 use App\Services\TargetClass\TargetClassService;
 use Illuminate\Database\Eloquent\Model;
 

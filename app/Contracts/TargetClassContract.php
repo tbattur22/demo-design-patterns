@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\DesignPatterns\Interfaces;
+namespace App\Contracts;
 
 interface TargetClassContract {
     public function describe():string;

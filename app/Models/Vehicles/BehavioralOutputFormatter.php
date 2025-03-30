@@ -2,8 +2,8 @@
 
 namespace App\Models\Vehicles;
 
-use App\Services\DesignPatterns\Interfaces\OutputContract;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\OutputContract;
+use App\Contracts\TargetClassContract;
 
 class BehavioralOutputFormatter implements OutputContract
 {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\DesignPatterns\Interfaces;
+namespace App\Contracts;
 
 use App\Services\DesignPatterns\Interfaces\Describable;
 

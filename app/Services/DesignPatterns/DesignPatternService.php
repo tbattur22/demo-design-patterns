@@ -2,7 +2,7 @@
 
 namespace App\Services\DesignPatterns;
 
-use App\Services\DesignPatterns\Interfaces\DesignPatternContract;
+use App\Contracts\DesignPatternContract;
 use App\Services\DesignPatterns\Singleton;
 use App\Services\DesignPatterns\Factory;
 use InvalidArgumentException;

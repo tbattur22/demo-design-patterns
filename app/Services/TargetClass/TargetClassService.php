@@ -2,9 +2,8 @@
 
 namespace App\Services\TargetClass;
 
-use App\Services\DesignPatterns\Interfaces\TargetClassServiceContract;
-use App\Models\Vehicles\Vehicle;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\TargetClassServiceContract;
+use App\Contracts\TargetClassContract;
 
 class TargetClassService implements TargetClassServiceContract
 {

@@ -1,7 +1,7 @@
 <?php
-namespace App\Services\DesignPatterns\Interfaces;
+namespace App\Contracts;
 
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\TargetClassContract;
 
 interface OutputContract {
     public function output():string;

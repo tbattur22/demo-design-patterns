@@ -2,14 +2,15 @@
 
 namespace App\Models\Vehicles;
 
-use App\Services\DesignPatterns\Interfaces\OutputContract;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use Illuminate\Database\Eloquent\Model;
+use App\Contracts\OutputContract;
+use App\Contracts\TargetClassContract;
 use App\Services\TargetClass\TargetClassBase;
 
 /**
  * Vehicle class representing Target Class
  */
-class Vehicle extends TargetClassBase
+class Vehicle extends Model implements TargetClassContract
 {
     /**
      * stores Make and Models of all available vehicle

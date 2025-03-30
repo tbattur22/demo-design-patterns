@@ -2,9 +2,8 @@
 
 namespace App\Services\DesignPatterns;
 
-use App\Services\DesignPatterns\Interfaces\Describable;
-use App\Services\DesignPatterns\Interfaces\DesignPatternContract;
-use App\Services\DesignPatterns\Interfaces\TargetClassContract;
+use App\Contracts\DesignPatternContract;
+use App\Contracts\TargetClassContract;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class DesignPatternBase extends Model implements DesignPatternContract
