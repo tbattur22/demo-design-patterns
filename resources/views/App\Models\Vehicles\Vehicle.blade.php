@@ -44,6 +44,9 @@ $makeModels = get_class($targetClassInstance)::getData();
             <h5 class="mb-2  font-bold tracking-tight text-gray-900 dark:text-white">Strategy Design Pattern is used to display the following formatter.</h5>
             <p class="font-normal text-gray-700 dark:text-gray-400"></p>
         </div>
+        @if (isset($patternObj) && $patternObj->getName() === 'strategy')
+            @include('MyRemarks')
+        @endif
     </div>
 </div>
 <script type="text/javascript">
