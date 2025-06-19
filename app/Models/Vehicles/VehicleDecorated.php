@@ -11,11 +11,24 @@ use App\Models\Vehicles\Vehicle;
 
 class VehicleDecorated extends Vehicle
 {
+    /**
+     * Instance of original vehicle to decorate
+     * @var TargetClassContract
+     */
     protected $origVehicle;
+
+    /**
+     * Extra Make and Models to add to the original vehicle instance
+     * @var array
+     */
     protected $extraMakeAndModels = [
         'New model' => ['New make 1', 'New make 2'],
     ];
 
+    /**
+     * Constructor take the instance of vehicle to decorate
+     * @param \App\Contracts\TargetClassContract $origVehicle
+     */
     public function __construct(TargetClassContract $origVehicle)
     {
         parent::__construct();
@@ -23,7 +36,7 @@ class VehicleDecorated extends Vehicle
     }
 
     /**
-     * Method adds some more vehicle Make and Models to the original Target class object and returns it.
+     * Override parent method to add extra Make and Models to the original vehicle instance and returns it.
      *
      * @return array
      */
@@ -33,9 +46,10 @@ class VehicleDecorated extends Vehicle
     }
 
     /**
-     * Method describes this particular vehicle instance
+     * Override the parent method to add extra information
+     * (extra make and models)
      *
-     * @return string
+     * @return array
      */
     public function describe():array
     {

@@ -159,6 +159,13 @@ class DesignPatternsController extends Controller
         ]);
     }
 
+    /**
+     * Method handles ajax call '/structural' for structural category of design patterns (Decorator pattern)
+     * when a user submits a Vehcile form
+     *
+     * @param Request $req request object
+     * @return json containing created instances of target class as per design pattern logic
+     */
     public function structural(Request $req)
     {
         $bodyContent = $req->toArray();
@@ -192,6 +199,17 @@ class DesignPatternsController extends Controller
         throw new InvalidArgumentException("Unsupported output formatter {$formatterName}");
     }
 
+    /**
+     * Helper method to retrieve target class (vehicle) instance
+     *
+     * @param string $pattern
+     * @param string $make
+     * @param string $model
+     * @param string $category
+     * @param string $targetClassName
+     * @param mixed $targetClassConstructorArg
+     * @return \App\Contracts\TargetClassContract
+     */
     private function getTargetClassInstance(string $pattern, string $make, string $model, string $category, string $targetClassName, $targetClassConstructorArg): TargetClassContract
     {
         // set selected design pattern and vehicle as target class
