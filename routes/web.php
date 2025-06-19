@@ -13,3 +13,5 @@ Route::get('/design_pattern/{pattern}', [DesignPatternsController::class, 'desig
 Route::post('/create', [DesignPatternsController::class, 'create']);
 
 Route::post('/behave', [DesignPatternsController::class, 'behave']);
+
+Route::post('/structural', [DesignPatternsController::class, 'structural']);

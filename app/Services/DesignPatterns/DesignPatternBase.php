@@ -31,7 +31,7 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
 
     /**
      * Target class name this design pattern class works with
-     * 
+     *
      * @var string
      */
     protected $targetClass;
@@ -73,7 +73,7 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
      */
     public function describe(): string
     {
-        return $this->description;   
+        return $this->description;
     }
 
     /**
@@ -88,11 +88,21 @@ abstract class DesignPatternBase extends Model implements DesignPatternContract
     }
 
     /**
-     * Abstract method to return Target Class instance
+     * Method instantiates and returns Target Class instance
+     * @param ?TargetClassContract $anotherInstance
      *
      * @return TargetClassContract
      */
-    abstract public function getTargetClassInstance():TargetClassContract;
+    public function getTargetClassInstance(?TargetClassContract $anotherInstance): TargetClassContract
+    {
+        if (empty($this->targetClass)) {
+            throw new \DomainException("Target class has not been set.");
+        }
+
+        $this->targetClassInstance = new $this->targetClass;
+
+        return $this->targetClassInstance;
+    }
 
     /**
      * Helper method to return fully qualified name of the Design Pattern class

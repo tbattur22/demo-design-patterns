@@ -46,7 +46,7 @@ class Singleton extends DesignPatternBase
      *
      * @return Singleton
      */
-    public static function getInstance():DesignPatternContract
+    public static function getInstance():Singleton
     {
         if (is_null(self::$instance)) {
             self::$instance = new Singleton();
@@ -57,15 +57,16 @@ class Singleton extends DesignPatternBase
     /**
      * Returns existing instance of the Target Class or instantiates new instance
      * in case it does not exist
+     * @param ?TargetClassContract $anotherInstance
      *
      * @return TargetClassContract
      */
-    public function getTargetClassInstance(): TargetClassContract
+    public function getTargetClassInstance(?TargetClassContract $anotherInstance): TargetClassContract
     {
         if (empty($this->targetClass)) {
             throw new DomainException("Target class has not been set.");
         }
-
+        // return existing instance if it exists for singleton pattern
         if (is_null(self::$targetClassInstance)) {
             self::$targetClassInstance = new ($this->targetClass);
         }

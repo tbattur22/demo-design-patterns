@@ -34,20 +34,4 @@ class Strategy extends DesignPatternBase
     {
         return $this->description;   
     }
-
-    /**
-     * Instantiates Target Class instance and returns it
-     *
-     * @return TargetClassContract
-     */
-    public function getTargetClassInstance(): TargetClassContract
-    {
-        if (empty($this->targetClass)) {
-            throw new DomainException("Target class has not been set.");
-        }
-
-        $this->targetClassInstance = new $this->targetClass;
-
-        return $this->targetClassInstance;
-    }
 }

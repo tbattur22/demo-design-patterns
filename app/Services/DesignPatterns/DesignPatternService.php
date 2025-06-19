@@ -3,6 +3,8 @@
 namespace App\Services\DesignPatterns;
 
 use App\Contracts\DesignPatternContract;
+use App\Contracts\TargetClassContract;
+use App\Models\Vehicles\VehicleDecorated;
 use App\Services\DesignPatterns\Singleton;
 use App\Services\DesignPatterns\Factory;
 use InvalidArgumentException;
@@ -28,10 +30,11 @@ class DesignPatternService
     public function __construct()
     {
         $this->designPatterns = [
-            'singleton' => Singleton::getInstance(null, null),
+            'singleton' => Singleton::getInstance(),
             'factory' => new Factory(),
-            'strategy' => new Strategy()
-        ];        
+            'strategy' => new Strategy(),
+            'decorator' => new Decorator(),
+        ];
     }
 
     /**
@@ -48,6 +51,7 @@ class DesignPatternService
      * Setter for a specific Deisgn Pattern instance
      *
      * @param string $designPattern
+     * @param TargetClassContract $vehicle
      * @return void
      */
     public function setDesignPattern(string $designPattern)
@@ -57,7 +61,7 @@ class DesignPatternService
         } else {
             $designPatternInstance = new ($this->getFullClassName($designPattern));
         }
-        
+
         if ($designPatternInstance instanceof DesignPatternContract) {
             $this->designPattern = $designPatternInstance;
         } else {

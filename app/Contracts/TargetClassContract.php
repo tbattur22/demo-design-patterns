@@ -2,6 +2,6 @@
 namespace App\Contracts;
 
 interface TargetClassContract {
-    public function describe():string;
-    public static function getData():array;
+    public function describe():array;
+    public function getMakeAndModels():array;
 }

@@ -9,5 +9,5 @@ interface DesignPatternContract {
     public function getCategory():?string;
     public function describe():string;
     public function setTargetClass(string $className):void;
-    public function getTargetClassInstance():TargetClassContract;
+    public function getTargetClassInstance(?TargetClassContract $anotherInstance):TargetClassContract;
 }

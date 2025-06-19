@@ -17,7 +17,7 @@ class Vehicle extends Model implements TargetClassContract
      *
      * @var array
      */
-    public static $makeAndModels;
+    protected $makeAndModels;
     /**
      * store Output Formatter instance
      *
@@ -35,23 +35,23 @@ class Vehicle extends Model implements TargetClassContract
      *
      * @var string
      */
-    private $make;
+    protected $make;
     /**
      * Model of the vehicle
      *
      * @var string
      */
-    private $model;
+    protected $model;
 
     /**
-     * Constructor 
+     * Constructor
      */
     public function __construct()
     {
         // generate unique id and store it
         $this->id = uniqid();
         // in real application the data would come from database
-        self::$makeAndModels = [
+        $this->makeAndModels = [
             'Audi' => ['A5', 'A5 Sportback', 'A6', 'A6 allroad'] ,
             'Nissan' => ['Altima', 'ARIYA', 'Aemada'],
             'Ford' => ['Bronco', 'Bronco Sport'],
@@ -65,26 +65,24 @@ class Vehicle extends Model implements TargetClassContract
      *
      * @return array
      */
-    public static function getData():array
+    public function getMakeAndModels():array
     {
-        return self::$makeAndModels;
+        return $this->makeAndModels;
     }
 
     /**
      * Method describes this particular vehicle instance
      *
-     * @return string
+     * @return array
      */
-    public function describe():string
+    public function describe():array
     {
-        $description = <<<EOD
-        vehicle class instance.
-        Id: {$this->id}
-        Make: {$this->make}
-        Model: {$this->model}.
-        EOD;
-
-        return $description;
+        return [
+            "description" => "Vehicle class instance",
+            "Id" => $this->id,
+            "Make" => $this->make,
+            "Model" => $this->model
+        ];
     }
 
     /**

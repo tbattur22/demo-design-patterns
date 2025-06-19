@@ -8,7 +8,7 @@ Design patterns are reusable solutions to common problems encountered during sof
 The project followed the SOLID principle and the used the following Design Patterns.
 </p>
 <p class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
-Creational Design Patters:
+Creational Design Patterns:
 <ul>
 <li>- Singleton</li>
 <li>- Factory</li>
@@ -16,9 +16,16 @@ Creational Design Patters:
 </p>
 <br />
 <p class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
-Behavioral Design Patters:
+Behavioral Design Patterns:
 <ul>
 <li>- Strategy</li>
 <li>- Template Method</li>
+</ul>
+</p>
+<br />
+<p class="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
+Structural Design Patterns:
+<ul>
+<li>- Decorator</li>
 </ul>
 </p>

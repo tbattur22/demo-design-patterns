@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\TargetClassContract;
 use App\Http\Controllers\Controller;
 use App\Services\DesignPatterns\DesignPatternService;
 use App\Services\TargetClass\TargetClassService;
 use App\Models\Vehicles\Vehicle;
+use App\Models\Vehicles\VehicleDecorated;
 use App\Models\Vehicles\CreationalOutputFormatter;
 use App\Models\Vehicles\BehavioralOutputFormatter;
+use App\Models\Vehicles\StructuralOutputFormatter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 /**
@@ -37,7 +41,8 @@ class DesignPatternsController extends Controller
      */
     protected $outputFormatters = [
         'CreationalOutputFormatter' => CreationalOutputFormatter::class,
-        'BehavioralOutputFormatter' => BehavioralOutputFormatter::class
+        'BehavioralOutputFormatter' => BehavioralOutputFormatter::class,
+        'StructuralOutputFormatter' => StructuralOutputFormatter::class,
     ];
     /**
      * Constructor injects the two service instances
@@ -73,13 +78,21 @@ class DesignPatternsController extends Controller
      */
     public function designPattern(string $pattern)
     {
+        $targetClass = Vehicle::class;
+        $targetInstance = null;
+
+        if ($pattern === "decorator") {
+            $targetClass = VehicleDecorated::class;
+            $targetInstance = new VehicleDecorated(new Vehicle());
+        }
+
         $this->designPatternsService->setDesignPattern(ucfirst($pattern));
-        $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
+        $this->designPatternsService->designPattern->setTargetClass($targetClass);
 
         return view('index', [
             'patterns' => $this->designPatternsService->getDesignPatterns(),
             'patternObj' => $this->designPatternsService->designPattern,
-            'targetClassInstance' => $this->designPatternsService->designPattern->getTargetClassInstance()
+            'targetClassInstance' => $this->designPatternsService->designPattern->getTargetClassInstance($targetInstance)
         ]);
     }
 
@@ -88,7 +101,7 @@ class DesignPatternsController extends Controller
      * when a user submits a Vehcile form ()
      *
      * @param Request $req request object
-     * @return json containing created instances of target class as per design pattern logic 
+     * @return json containing created instances of target class as per design pattern logic
      */
     public function create(Request $req)
     {
@@ -101,8 +114,8 @@ class DesignPatternsController extends Controller
         $outputFormatter = ucfirst($bodyContent["category"]) . "OutputFormatter";
 
         // create two instances of target class in order to see the behavior of Singleon and Factory design patterns
-        $instance1 = $this->designPatternsService->designPattern->getTargetClassInstance();
-        $instance2 = $this->designPatternsService->designPattern->getTargetClassInstance();
+        $instance1 = $this->designPatternsService->designPattern->getTargetClassInstance(null);
+        $instance2 = $this->designPatternsService->designPattern->getTargetClassInstance(null);
 
         // set user selected Vehicle make and model and set output formatter according to selected deisgn pattern category
         $instance1->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"]);
@@ -112,8 +125,8 @@ class DesignPatternsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'instance1_description' => nl2br(htmlspecialchars($instance1->describe(), ENT_QUOTES)),
-            'instance2_description' => nl2br(htmlspecialchars($instance2->describe(), ENT_QUOTES)),
+            'instance1_description' => $instance1->describe(),
+            'instance2_description' => $instance2->describe(),
             'outputFormatter' => nl2br(htmlspecialchars($instance1->outputFormatter->output(), ENT_QUOTES))
         ]);
     }
@@ -123,7 +136,7 @@ class DesignPatternsController extends Controller
      * when a user submits a Vehcile form
      *
      * @param Request $req request object
-     * @return json containing created instances of target class as per design pattern logic 
+     * @return json containing created instances of target class as per design pattern logic
      */
     public function behave(Request $req)
     {
@@ -133,7 +146,7 @@ class DesignPatternsController extends Controller
         $this->designPatternsService->designPattern->setTargetClass(Vehicle::class);
 
         // set user selected Vehicle make and model and set output formatter according to selected deisgn pattern category
-        $instance = $this->designPatternsService->designPattern->getTargetClassInstance()
+        $instance = $this->designPatternsService->designPattern->getTargetClassInstance(null)
         ->setMake($bodyContent["selectedMake"])->setModel($bodyContent["selectedModel"]);
 
         $outputFormatter = ucfirst($bodyContent["category"]) . "OutputFormatter";
@@ -141,8 +154,25 @@ class DesignPatternsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'instance1_description' => nl2br(htmlspecialchars($instance->describe(), ENT_QUOTES)),
+            'instance1_description' => $instance->describe(),
             'outputFormatter' => nl2br(htmlspecialchars($instance->outputFormatter->output(), ENT_QUOTES))
+        ]);
+    }
+
+    public function structural(Request $req)
+    {
+        $bodyContent = $req->toArray();
+
+        if ($bodyContent["pattern"] === 'decorator') {
+            $origInstance = $this->getTargetClassInstance("factory", $bodyContent["selectedMake"], $bodyContent["selectedModel"], $bodyContent["category"], Vehicle::class, null);
+
+            $decoratedInstance = $this->getTargetClassInstance($bodyContent["pattern"], $bodyContent["selectedMake"], $bodyContent["selectedModel"], $bodyContent["category"], VehicleDecorated::class, $origInstance);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'instance1_description' => $decoratedInstance->describe(),
+            'outputFormatter' => nl2br(htmlspecialchars($decoratedInstance->outputFormatter->output(), ENT_QUOTES))
         ]);
     }
 
@@ -160,5 +190,21 @@ class DesignPatternsController extends Controller
         }
 
         throw new InvalidArgumentException("Unsupported output formatter {$formatterName}");
+    }
+
+    private function getTargetClassInstance(string $pattern, string $make, string $model, string $category, string $targetClassName, $targetClassConstructorArg): TargetClassContract
+    {
+        // set selected design pattern and vehicle as target class
+        $this->designPatternsService->setDesignPattern(ucfirst($pattern));
+        $this->designPatternsService->designPattern->setTargetClass($targetClassName);
+
+        // set user selected Vehicle make and model and set output formatter according to selected deisgn pattern category
+        $instance = call_user_func([$this->designPatternsService->designPattern, 'getTargetClassInstance'], $targetClassConstructorArg);
+        $instance->setMake($make)->setModel($model);
+
+        $outputFormatter = ucfirst($category) . "OutputFormatter";
+        $instance->setOutputFormatter(new ($this->getOutputFormatterFullName($outputFormatter))());
+
+        return $instance;
     }
 }

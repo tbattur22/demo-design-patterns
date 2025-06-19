@@ -35,20 +35,4 @@ class Factory extends DesignPatternBase
     {
         return $this->description;   
     }
-
-    /**
-     * Method instantiates and returns Target Class instance
-     *
-     * @return TargetClassContract
-     */
-    public function getTargetClassInstance(): TargetClassContract
-    {
-        if (empty($this->targetClass)) {
-            throw new DomainException("Target class has not been set.");
-        }
-
-        $this->targetClassInstance = new $this->targetClass;
-
-        return $this->targetClassInstance;
-    }
 }
